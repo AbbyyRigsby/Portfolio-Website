@@ -69,10 +69,10 @@ You should get the following prompts in your terminal:
 Set up [TARGET FOLDER]?
 yes
 Found project [PROJECT NAME]. Link to it?
-_yes_
+yes
 Linked to [PROJECT NAME].
 Would you like to pull environment project variables?
-_yes_
+yes
 ```
 
 From here, your .gitignore should be updated, and a new folder called .vercel is added. In this, you should see _project.json_, with your **projectID** and **orgID**.
