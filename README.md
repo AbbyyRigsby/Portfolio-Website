@@ -1,89 +1,108 @@
-# Portfolio Website v1
+# Portfolio Website
 
-My first crack at a portfolio website! Containing everything from a description about what I like, to my projects, to even a little about my publications!
-This is a mostly static website for the time being, but more is planned for v2.
+A personal portfolio built with React and Vite, deployed to Vercel via a custom GitHub Actions CI/CD pipeline.
 
-## Main Dependencies
+🔗 Live Site: https://abbyrigsby.vercel.app
 
-| **Dependency** | **Use Case**                               |
-|----------------|--------------------------------------------|
-|           Vite | Fast, lean server environment.             |
-|       React.js | Reusable components making for dynamic     |
-|    TailwindCSS | Easy to use styling for advanced websites. |
-|    React-Toast | Dynamic notifications.                     |
-|   Lucide-React | Professional-looking icons.                |
+---
 
-## Installation
+## Tech Stack
 
-For installation, this assumes you have already created an **Email.js** website and set up an event for your email.
+| Dependency     | Purpose                                              |
+|----------------|------------------------------------------------------|
+| Vite           | Fast build tooling and local dev server              |
+| React.js       | Component-based UI architecture                      |
+| TailwindCSS    | Utility-first CSS styling                            |
+| React-Toastify | Toast notifications for user feedback                |
+| Lucide-React   | Consistent, lightweight icon library                 |
 
-1. Clone the Github Repository to your local machine.
-2. Create your own .env file. Use your own EmailJS credentials, including:
-- Service ID
-- Template ID
-- Service Public ID
+---
 
-  This sets up the contact system on the bottom of the page.
-  
-3. Run the following commands:
-```
-npm install
-npm run dev
-```
+## Prerequisites
 
-Now you should have it running on your local machine!
+- Node.js v18 or higher (https://nodejs.org/)
+- npm (bundled with Node)
+- An EmailJS account with a configured email service and template (https://www.emailjs.com/)
 
-## Deployment Details
+---
 
-### Base Deployment
+## Local Development
 
-Once you have uploaded your copy to GitHub, open **Vercel.app** and create a new project. Connect your GitHub repository, then configure the deployment with the following commands:
+1. Clone the repository
 
-```
-# install
-npm install
+   git clone https://github.com/AbbyyRigsby/Portfolio-Website.git
+   cd Portfolio-Website
 
-# leave output folder at default
+2. Configure environment variables
 
-# build
-npm run build
-```
+   Copy the example env file and fill in your EmailJS credentials:
 
-Also, click "import .env" to import your .env file variables.
+   cp .env.example .env
 
-You should be able to deploy from here! 
+   Required variables:
 
-### Github Actions Setup
+   VITE_EMAILJS_SERVICE_ID=your_service_id
+   VITE_EMAILJS_TEMPLATE_ID=your_template_id
+   VITE_EMAILJS_PUBLIC_KEY=your_public_key
 
-This website is deployed to Vercel using GitHub Actions. This allows for **more control** over the pipeline to add jobs wherever necessary. For the beginning part of the tutorial, it's recommended you do not push your .github folder until suggested in the deployment.
+3. Install dependencies and start the dev server
 
-From here, you can begin to configure your GitHub Actions workflow.
+   npm install
+   npm run dev
 
-From here, run the following:
-```
-npx vercel link
-```
+The site will be available at http://localhost:5173.
 
-You should get the following prompts in your terminal:
-```
-Set up [TARGET FOLDER]?
-yes
-Found project [PROJECT NAME]. Link to it?
-yes
-Linked to [PROJECT NAME].
-Would you like to pull environment project variables?
-yes
-```
+---
 
-From here, your .gitignore should be updated, and a new folder called .vercel is added. In this, you should see _project.json_, with your **projectID** and **orgID**.
+## Deployment
 
-Finally, you need a Vercel Token for this project. Click on Settings at the bottom of the left-hand list on Vercel, then search "Tokens". The result "Tokens" with "Account" underneath should appear. Click it.
+### Option 1: Vercel Dashboard (Quick Start)
 
-Enter the new token name. For "Scope", choose your project. Finally, set your expiration date and hit "enter".
+1. Push your fork to GitHub.
+2. Open Vercel (https://vercel.com) and create a new project linked to your repository.
+3. Set the following build configuration:
+   - Install command:  npm install
+   - Build command:    npm run build
+   - Output directory: dist (default)
+4. Import your .env variables via the Vercel dashboard under Environment Variables.
+5. Deploy.
 
-Go to your repository, then **Settings** --> **Secrets and variables** --> **Actions**. From there, enter the following credentials:
-- **VERCEL_ORG_ID:** Vercel Organization ID.
-- **VERCEL_PROJECT_ID:** Vercel Project ID.
-- **VERCEL_TOKEN:** The token just made in your Vercel account.
+### Option 2: GitHub Actions (CI/CD Pipeline)
 
-Finally, save these secrets and re-add the .github folder. Push this folder to your repository. From there, your Github Actions workflow should be operational!
+This repo uses a GitHub Actions workflow (.github/workflows/) to build and deploy to Vercel
+automatically on every push to main. This approach allows additional jobs (linting, testing,
+etc.) to be inserted into the pipeline.
+
+Step 1 — Link your local project to Vercel
+
+Run the following and follow the prompts to link your repo to an existing Vercel project:
+
+   npx vercel link
+
+This creates a .vercel/project.json file containing your projectID and orgID.
+
+Step 2 — Create a Vercel deployment token
+
+In Vercel, go to Settings → Tokens, create a new token scoped to your project, and note the value.
+
+Step 3 — Add GitHub repository secrets
+
+In your GitHub repo, go to Settings → Secrets and variables → Actions and add:
+
+| Secret Name          | Value                        |
+|----------------------|------------------------------|
+| VERCEL_ORG_ID        | Your Vercel organization ID  |
+| VERCEL_PROJECT_ID    | Your Vercel project ID       |
+| VERCEL_TOKEN         | The token created in Step 2  |
+
+Step 4 — Push the workflow
+
+Commit and push the .github/ folder. The Actions workflow will trigger on the next push to main.
+
+⚠️  Do not push .github/ before completing Steps 1–3, or the workflow will fail on first run.
+
+---
+
+## License
+
+This project is open source and available under the MIT License.
